@@ -49,15 +49,7 @@
   },
   "plugins": {
     "shell": {
-      "open": true,
-      "scope": [
-        {
-          "name": "python-transcribe",
-          "cmd": "python3",
-          "args": true,
-          "sidecar": false
-        }
-      ]
+      "open": true
     }
   }
 }

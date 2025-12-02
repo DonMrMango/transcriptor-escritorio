@@ -21,20 +21,11 @@ struct TranscribeResult {
 
 #[tauri::command]
 async fn transcribe_audio(config: TranscribeConfig) -> Result<TranscribeResult, String> {
-    // Construir path al CLI de Python
-    let python_cli = if cfg!(debug_assertions) {
-        // En desarrollo, usar desde el directorio del proyecto
-        std::env::current_dir()
-            .map_err(|e| e.to_string())?
-            .join("python-engine")
-            .join("cli.py")
-    } else {
-        // En producción, buscar en resources
-        tauri::api::path::resource_dir(&tauri::PackageInfo::new(), &Default::default())
-            .ok_or("No se pudo obtener resource dir")?
-            .join("python-engine")
-            .join("cli.py")
-    };
+    // Construir path al CLI de Python (por ahora solo modo desarrollo)
+    let python_cli = std::env::current_dir()
+        .map_err(|e| e.to_string())?
+        .join("python-engine")
+        .join("cli.py");
 
     // Preparar JSON de configuración
     let config_json = serde_json::to_string(&config)
@@ -76,17 +67,10 @@ async fn transcribe_audio(config: TranscribeConfig) -> Result<TranscribeResult, 
 
 #[tauri::command]
 async fn test_api_key(api_key: String) -> Result<bool, String> {
-    let python_cli = if cfg!(debug_assertions) {
-        std::env::current_dir()
-            .map_err(|e| e.to_string())?
-            .join("python-engine")
-            .join("cli.py")
-    } else {
-        tauri::api::path::resource_dir(&tauri::PackageInfo::new(), &Default::default())
-            .ok_or("No se pudo obtener resource dir")?
-            .join("python-engine")
-            .join("cli.py")
-    };
+    let python_cli = std::env::current_dir()
+        .map_err(|e| e.to_string())?
+        .join("python-engine")
+        .join("cli.py");
 
     let output = Command::new("python3")
         .arg(python_cli)
