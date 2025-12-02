@@ -1,0 +1,63 @@
+{
+  "$schema": "../node_modules/@tauri-apps/cli/config.schema.json",
+  "productName": "Transcriptor Orb",
+  "version": "0.1.0",
+  "identifier": "com.grupolada.transcriptor",
+  "build": {
+    "frontendDist": "../dist",
+    "devUrl": "http://localhost:5173",
+    "beforeDevCommand": "npm run dev",
+    "beforeBuildCommand": "npm run build"
+  },
+  "app": {
+    "windows": [
+      {
+        "label": "main",
+        "title": "Transcriptor",
+        "width": 120,
+        "height": 120,
+        "minWidth": 120,
+        "minHeight": 120,
+        "resizable": false,
+        "fullscreen": false,
+        "decorations": false,
+        "transparent": true,
+        "alwaysOnTop": true,
+        "skipTaskbar": true,
+        "center": false,
+        "x": 100,
+        "y": 100
+      }
+    ],
+    "security": {
+      "csp": null
+    }
+  },
+  "bundle": {
+    "active": true,
+    "targets": "all",
+    "icon": [
+      "icons/32x32.png",
+      "icons/128x128.png",
+      "icons/128x128@2x.png",
+      "icons/icon.icns",
+      "icons/icon.ico"
+    ],
+    "macOS": {
+      "minimumSystemVersion": "10.15"
+    }
+  },
+  "plugins": {
+    "shell": {
+      "open": true,
+      "scope": [
+        {
+          "name": "python-transcribe",
+          "cmd": "python3",
+          "args": true,
+          "sidecar": false
+        }
+      ]
+    }
+  }
+}
